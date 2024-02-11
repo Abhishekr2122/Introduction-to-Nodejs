@@ -7,6 +7,7 @@
 
 // fs module used to handle file system (reading and writing to a file);
 const fs = require("fs");
+const http = require("http");
 
 // Reading and writing the file in the Synchronous way(Blocking Way).
 // Reading the data present in the file
@@ -26,7 +27,9 @@ const fs = require("fs");
 // const newData = fs.readFileSync("./txt/input.txt", "utf-8");
 // console.log("This is the data after writing to the input file", newData);
 
-// Reading and writing the file in Asynchronous way(Non-blocking way).
+/*Reading and writing the file in Asynchronous way(Non-blocking way).
+
+// In this the callback function is executed when the reading or writing the file operation is completed asynchronously.
 
 fs.readFile("./txt/start.txt", "utf-8", function (err, data1) {
   fs.readFile(`./txt/${data1}.txt`, "utf-8", function (err, data2) {
@@ -41,7 +44,7 @@ fs.readFile("./txt/start.txt", "utf-8", function (err, data1) {
         `${data2}\n${data3}`,
         "utf-8",
         function (err) {
-          console.log("Your file has been written ☺");
+          console.log("Your file has been written 😇");
         }
       );
     });
@@ -49,3 +52,15 @@ fs.readFile("./txt/start.txt", "utf-8", function (err, data1) {
 });
 
 console.log("Will read File");
+*/
+
+// Creating a Simple webserver
+
+const server = http.createServer(function (request, response) {
+  response.end("Hello from the server");
+});
+
+// Starting the server
+server.listen(8000, "127.0.0.1", function () {
+  console.log("Listening to requests on port 8000 ");
+});
