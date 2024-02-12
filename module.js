@@ -8,6 +8,7 @@
 // fs module used to handle file system (reading and writing to a file);
 const fs = require("fs");
 const http = require("http");
+const url = require("url");
 
 // Reading and writing the file in the Synchronous way(Blocking Way).
 // Reading the data present in the file
@@ -55,12 +56,28 @@ console.log("Will read File");
 */
 
 // Creating a Simple webserver
-
-const server = http.createServer(function (request, response) {
-  response.end("Hello from the server");
-});
+// The callfunction is executed every time we request a request to the server.
+// const server = http.createServer(function (request, response) {
+//   response.end("Hello from the server");
+// });
 
 // Starting the server
+// server.listen(8000, "127.0.0.1", function () {
+//   console.log("Listening to requests on port 8000 ");
+// });
+
+// Routing
+const server = http.createServer(function (req, res) {
+  const { url } = req;
+  if (url === "/") {
+    res.end("Welcome to the home page of nodejs course");
+  } else if (url === "/products") {
+    res.end("Smart phones, Cars,bikes");
+  } else {
+    res.end("There is no data to show");
+  }
+});
+
 server.listen(8000, "127.0.0.1", function () {
   console.log("Listening to requests on port 8000 ");
 });
