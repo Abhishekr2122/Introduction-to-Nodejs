@@ -10,7 +10,7 @@ const fs = require("fs");
 const http = require("http");
 const url = require("url");
 
-// Reading and writing the file in the Synchronous way(Blocking Way).
+///// Reading and writing the file in the Synchronous way(Blocking Way).
 // Reading the data present in the file
 // const textIn = fs.readFileSync("./txt/input.txt", "utf-8");
 // console.log(
@@ -28,7 +28,7 @@ const url = require("url");
 // const newData = fs.readFileSync("./txt/input.txt", "utf-8");
 // console.log("This is the data after writing to the input file", newData);
 
-/*Reading and writing the file in Asynchronous way(Non-blocking way).
+/*/////Reading and writing the file in Asynchronous way(Non-blocking way).
 
 // In this the callback function is executed when the reading or writing the file operation is completed asynchronously.
 
@@ -55,29 +55,57 @@ fs.readFile("./txt/start.txt", "utf-8", function (err, data1) {
 console.log("Will read File");
 */
 
-// Creating a Simple webserver
+///// Creating a Simple webserver
 // The callfunction is executed every time we request a request to the server.
 // const server = http.createServer(function (request, response) {
 //   response.end("Hello from the server");
 // });
 
-// Starting the server
+/////Starting the server
 // server.listen(8000, "127.0.0.1", function () {
 //   console.log("Listening to requests on port 8000 ");
 // });
 
-// Routing
+///// Routing
+// In routing in nodejs the server sends the specific response for the specific type of url request.
+// Its kind of same as Routing in React. Like in React we render a specific component for the specific type of url.
+// In nodejs the sever sends the specific type of response for the specific type of url request.
+// const server = http.createServer(function (req, res) {
+//   const { url } = req;
+//   if (url === "/") {
+//     res.end("Welcome to the home page of nodejs course");
+//   } else if (url === "/products") {
+//     res.end("Smart phones, Cars,bikes");
+//   } else {
+//     res.end("There is no data to show");
+//   }
+// });
+
+// server.listen(8000, "127.0.0.1", function () {
+//   console.log("Listening to requests on port 8000 ");
+// });
+
+///// Creating a simple Api
+
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const dataObj = JSON.parse(data);
+
 const server = http.createServer(function (req, res) {
   const { url } = req;
+
   if (url === "/") {
-    res.end("Welcome to the home page of nodejs course");
+    res.end("Welcome to the home page");
   } else if (url === "/products") {
-    res.end("Smart phones, Cars,bikes");
+    res.end("Cars , Bikes , Scooty ,Trucks");
+  } else if (url === "/api") {
+    res.writeHead(200, { "Content-type": "application/json" });
+    res.end(data);
   } else {
-    res.end("There is no data to show");
+    res.writeHead(404, { "Content-type": "text/html" });
+    res.end("<h1>Page not found</h1>");
   }
 });
 
 server.listen(8000, "127.0.0.1", function () {
-  console.log("Listening to requests on port 8000 ");
+  console.log("The server is listening at port 8000");
 });
