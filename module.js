@@ -93,7 +93,8 @@ const dataObj = JSON.parse(data);
 const server = http.createServer(function (req, res) {
   const { url } = req;
 
-  if (url === "/") {
+  //  overview page
+  if (url === "/" || url === "/overview") {
     res.end("Welcome to the home page");
   } else if (url === "/products") {
     res.end("Cars , Bikes , Scooty ,Trucks");
