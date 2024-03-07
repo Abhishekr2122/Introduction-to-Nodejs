@@ -94,7 +94,7 @@ const replaceTemplate = function (temp, product) {
   output = output.replace(/{%FROM%}/g, product.from);
   output = output.replace(/{%NUTRIENTS%}/g, product.nutrients);
   output = output.replace(/{%QUANTITY%}/g, product.quantity);
-  output = output.replace(/{%DESCRIPTIOn%}/g, product.description);
+  output = output.replace(/{%DESCRIPTION%}/g, product.description);
   output = output.replace(/{%ID%}/g, product.id);
 
   if (!product.organic) {
@@ -121,10 +121,9 @@ const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
 
 const server = http.createServer(function (req, res) {
-  const { url } = req;
-
+  const { query, pathname } = url.parse(req.url);
   //  overview page
-  if (url === "/" || url === "/overview") {
+  if (pathname === "/" || pathname === "/overview") {
     res.writeHead(200, { "Content-type": "text/html" });
 
     const cardsHtml = dataObj
@@ -132,9 +131,9 @@ const server = http.createServer(function (req, res) {
       .join("");
     const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardsHtml);
     res.end(output);
-  } else if (url === "/products") {
+  } else if (pathname === "/products") {
     res.end("Cars , Bikes , Scooty ,Trucks");
-  } else if (url === "/api") {
+  } else if (pathname === "/api") {
     res.writeHead(200, { "Content-type": "application/json" });
     res.end(data);
   } else {
